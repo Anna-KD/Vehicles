@@ -52,6 +52,11 @@
                 Width="100"
                 Margin="5"
                 Click="btnMove_Click"/>
+                
+            <Button Content="Remove"
+                Width="100"
+                Margin="5"
+        Click="btnRemove_Click"/>
         </StackPanel>
 
         <TextBox Name="txtLog"

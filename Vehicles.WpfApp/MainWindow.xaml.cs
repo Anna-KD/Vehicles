@@ -14,16 +14,31 @@ namespace Vehicles.WpfApp
             InitializeComponent();
 
             lbVehicles.ItemsSource = vehicles;
+            carGarage.LogMessage += msg =>
+            {
+                txtLog.AppendText(msg + Environment.NewLine);
+            };
+
+            boatGarage.LogMessage += msg =>
+            {
+                txtLog.AppendText(msg + Environment.NewLine);
+            };
         }
 
         private void btnCar_Click(object sender, RoutedEventArgs e)
         {
-            vehicles.Add(new Car("Volvo", "V60"));
+            Car car = new Car("Volvo", "V60");
+
+            vehicles.Add(car);
+            carGarage.Add(car);
         }
 
         private void btnBoat_Click(object sender, RoutedEventArgs e)
         {
-            vehicles.Add(new Boat("Yamaha", "Boat"));
+            Boat boat = new Boat("Yamaha", "Boat");
+
+            vehicles.Add(boat);
+            boatGarage.Add(boat);
         }
 
         private void btnAmphibious_Click(object sender, RoutedEventArgs e)
@@ -58,5 +73,23 @@ namespace Vehicles.WpfApp
                 MessageBox.Show(ex.Message);
             }
         }
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            if (lbVehicles.SelectedItem == null)
+                return;
+
+            Vehicle vehicle = (Vehicle)lbVehicles.SelectedItem;
+
+            vehicles.Remove(vehicle);
+
+            if (vehicle is Car car)
+                carGarage.Remove(car);
+
+            if (vehicle is Boat boat)
+                boatGarage.Remove(boat);
+        }
+        private Garage<Car> carGarage = new();
+        private Garage<Boat> boatGarage = new();
+        
     }
 }
